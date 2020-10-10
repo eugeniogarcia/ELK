@@ -1,0 +1,721 @@
+{
+	"info": {
+		"_postman_id": "9a40d659-8e6f-495a-a97f-ccb90bc9346c",
+		"name": "ELK",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Infraestructura",
+			"item": [
+				{
+					"name": "Cluster Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9200/_cat/health?v&pretty",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_cat",
+								"health"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								},
+								{
+									"key": "pretty",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Informacion de Indices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9200/_cat/indices?v",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_cat",
+								"indices"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "CRUD",
+			"item": [
+				{
+					"name": "Indexa Documento",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John Doe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/customer/_doc/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"customer",
+								"_doc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recupera documento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9200/customer/_doc/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"customer",
+								"_doc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crea Indice con props",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"settings\" : {\r\n        \"number_of_shards\" : 3,\r\n        \"number_of_replicas\" : 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/blogs",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"blogs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cambia Indice replcas",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"settings\" : {\r\n        \"number_of_replicas\" : 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/blogs/_settings",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"blogs",
+								"_settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Carga Bulk de documentos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": "/C:/Users/Eugenio/Downloads/elastic/accounts.json"
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/bank/_bulk?pretty&refresh",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_bulk"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": null
+								},
+								{
+									"key": "refresh",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recupera Mapping",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/bank/_mapping/",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_mapping",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Busca Todos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": { \"match_all\": {} },\r\n  \"sort\": [\r\n    { \"account_number\": \"asc\" }\r\n  ],\r\n  \"from\": 10,\r\n  \"size\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/bank/_search?pretty",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Match Query",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": { \"match\": { \"address\": \"mill lane\" } }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/bank/_search?pretty",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Match Phrase Query",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": { \"match_phrase\": { \"address\": \"mill lane\" } }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/bank/_search?pretty",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bool Query",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": {\r\n    \"bool\": {\r\n      \"must\": [\r\n        { \"match\": { \"age\": \"40\" } }\r\n      ],\r\n      \"must_not\": [\r\n        { \"match\": { \"state\": \"ID\" } }\r\n      ]\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/bank/_search?pretty",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bool Query with Filter",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": {\r\n    \"bool\": {\r\n      \"must\": { \"match_all\": {} },\r\n      \"filter\": {\r\n        \"range\": {\r\n          \"balance\": {\r\n            \"gte\": 20000,\r\n            \"lte\": 30000\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/bank/_search?pretty",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Analytics",
+			"item": [
+				{
+					"name": "Agrega terms aggregation",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"size\": 0,\r\n  \"aggs\": {\r\n    \"group_by_state\": {\r\n      \"terms\": {\r\n        \"field\": \"state.keyword\"\r\n      }\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/bank/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agrega terms aggregation multiple y ordenada",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"size\": 0,\r\n  \"aggs\": {\r\n    \"group_by_state\": {\r\n      \"terms\": {\r\n        \"field\": \"state.keyword\",\r\n        \"order\": {\r\n          \"average_balance\": \"desc\"\r\n        }\r\n      },\r\n      \"aggs\": {\r\n        \"average_balance\": {\r\n          \"avg\": {\r\n            \"field\": \"balance\"\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bool Query y Agregados",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"size\":0,\r\n  \"query\": {\r\n    \"bool\": {\r\n      \"must\": [\r\n        { \"match\": { \"age\": \"40\" } }\r\n      ],\r\n      \"must_not\": [\r\n        { \"match\": { \"state\": \"ID\" } }\r\n      ]\r\n    }\r\n  },\r\n    \"aggs\": {\r\n    \"group_by_state\": {\r\n      \"terms\": {\r\n        \"field\": \"state.keyword\",\r\n        \"order\": {\r\n          \"average_balance\": \"desc\"\r\n        }\r\n      },\r\n      \"aggs\": {\r\n        \"average_balance\": {\r\n          \"avg\": {\r\n            \"field\": \"balance\"\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/bank/_search?pretty",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Analyzers",
+			"item": [
+				{
+					"name": "localhost:9200/_analyze",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"analyzer\": \"spanish\",\r\n  \"text\": \"Los 2 zorros marrones saltaron sobre el hueso del perro perezoso.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/_analyze",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recupera Mapping",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/bank/_mapping/",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_mapping",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crea mapping",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"properties\" : {\r\n        \"tag1\" : {\r\n            \"type\" : \"text\",\r\n            \"index\": \"true\"\r\n        },\r\n        \"tag2\" : {\r\n            \"type\" : \"keyword\",\r\n            \"index\": \"false\"\r\n        },\r\n        \"descripcion\" : {\r\n            \"type\" : \"text\",\r\n            \"index\": \"true\",\r\n            \"analyzer\": \"english\"\r\n        },\r\n        \"id\" : {\r\n            \"type\" : \"keyword\",\r\n            \"index\": \"true\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/bank/_mapping/",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_mapping",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recupera Mapping",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/bank/_mapping/",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"bank",
+								"_mapping",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
